@@ -4,15 +4,18 @@ const express = require('express');
 
 const port = process.env.PORT;
 
+// Routes
 const testRoutes = require('./routes/test');
+const keycloakRoutes = require('./routes/keycloak');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-// Routes
+// Register routes
 app.use('/api', testRoutes);
+app.use('/api', keycloakRoutes);
 
 app.listen(port, () => {
   console.log(`Server Started at ${port}`);
