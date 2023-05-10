@@ -43,7 +43,7 @@ export default {
   </div>
 
   <p class="read-the-docs">
-    This is from a tutorial on how to use Keycloak JS with Vite + Vue 3 + Pinia + Node.
+    This project is for a tutorial on how to use Keycloak authentication with Vue 3 + Pinia + Node.
   </p>
   <p class="read-the-docs"> 
     Go to this 
@@ -69,6 +69,7 @@ export default {
       type="button"
       @click="validateUser"
       :disabled="loading"
+      title="Check Console with Dev Tools"
     >
       Backend Validation
     </button>
