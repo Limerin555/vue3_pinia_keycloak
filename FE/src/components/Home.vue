@@ -54,7 +54,7 @@ export default {
   </p>
 
   <div class="card">
-    <!-- Refresh token button -->
+    <!-- Test Pinia persisted state button -->
     <button 
       class="mr-15"
       type="button" 

@@ -23,5 +23,7 @@ const renderApp = () => {
   app.mount('#app');
 }
 
+// renderApp();
+
 // Call keycloak service to init on render
 keycloakService.CallInit(renderApp);

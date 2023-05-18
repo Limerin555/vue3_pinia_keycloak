@@ -12,7 +12,7 @@ let store = null;
 
 
 /**
- * Initializes Keycloak.
+ * Initializes Keycloak, then run callback. This will prompt you to login.
  *
  * @param onAuthenticatedCallback
  */
@@ -25,7 +25,6 @@ async function init(onInitCallback) {
     console.error(error)
   }
 };
-
 
 /**
  * Initializes store with Keycloak user data
