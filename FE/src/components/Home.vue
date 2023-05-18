@@ -58,6 +58,17 @@ export default {
     <button 
       class="mr-15"
       type="button" 
+      title="Test persisted state"
+      @click="$store.testAction"
+    >
+      Test ({{ $store.test }})
+    </button>
+
+    <!-- Refresh token button -->
+    <button 
+      class="mr-15"
+      type="button" 
+      title="Refreshes user token"
       @click="$store.refreshUserToken"
     >
       Refresh Token
@@ -67,9 +78,9 @@ export default {
     <button 
       class="mr-15"
       type="button"
-      @click="validateUser"
-      :disabled="loading"
       title="Check Console with Dev Tools"
+      :disabled="loading"
+      @click="validateUser"
     >
       Backend Validation
     </button>
@@ -77,6 +88,7 @@ export default {
     <!-- Logout button -->
     <button 
       type="button" 
+      title="Logout Keycloak user"
       @click="$store.logout"
     >
       Logout

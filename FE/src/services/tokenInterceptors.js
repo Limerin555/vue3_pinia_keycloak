@@ -5,7 +5,7 @@ const setup = (store) => {
     (config) => {
       // If user is authenticated, place access token in request header.
       if (store.authenticated) {
-        config.headers.Authorization = `Bearer ${store.user.token}`;
+        config.headers["x-access-token"] = store.user.token;
       }
 
       return config;
@@ -30,7 +30,7 @@ const setup = (store) => {
           await store.refreshUserToken();
 
           // Place refreshed access token in the request header
-          oriConfig.headers.Authorization = `Bearer ${store.user.token}`;
+          oriConfig.headers.headers["x-access-token"] = store.user.token;
 
           return axiosInstance(oriConfig);
         } catch (_error) {

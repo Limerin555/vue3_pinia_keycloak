@@ -1,5 +1,4 @@
 import Keycloak from 'keycloak-js';
-import { useAuthStore } from "@/stores/authStore.js";
 
 const options = {
   url: import.meta.env.VITE_KEYCLOAK_URL,
@@ -8,33 +7,42 @@ const options = {
 }
 
 const keycloak = new Keycloak(options);
-let pinia = null;
+let authenticated;
 let store = null;
 
-function setupStore(piniaInstance) {
-  pinia = piniaInstance;
-  store = useAuthStore(pinia);
-}
 
 /**
- * Initializes Keycloak instance and calls the provided callback function if successfully authenticated.
+ * Initializes Keycloak.
  *
  * @param onAuthenticatedCallback
  */
-async function login(piniaInstance, onAuthenticatedCallback) {
+async function init(onInitCallback) {
   try {
-    await setupStore(piniaInstance);
-
-    const authenticated = await keycloak.init({ onLoad: "login-required" });
-    store.initOauth(keycloak);
-    authenticated ? onAuthenticatedCallback() : alert("not authenticated");
-
+    authenticated = await keycloak.init({ onLoad: "login-required" })
+    onInitCallback()
   } catch (error) {
-    console.error("Keycloak init failed");
-    console.error(error);
+    console.error("Keycloak init failed")
+    console.error(error)
   }
 };
 
+
+/**
+ * Initializes store with Keycloak user data
+ *
+ */
+async function initStore(storeInstance) {
+  try {
+    store = storeInstance
+    store.initOauth(keycloak)
+
+    // Show alert if user is not authenticated
+    if (!authenticated) { alert("not authenticated") }
+  } catch (error) {
+    console.error("Keycloak init failed")
+    console.error(error)
+  }
+};
 
 /**
  * Logout user
@@ -48,7 +56,7 @@ function logout(url) {
  */
 async function refreshToken() {
   try {
-    await keycloak.updateToken(480);
+    await keycloak.updateToken(300); // 300 secs | 5 mins
     return keycloak;
   } catch (error) {
     console.error('Failed to refresh token');
@@ -57,7 +65,8 @@ async function refreshToken() {
 }
 
 const KeycloakService = {
-  CallLogin: login,
+  CallInit: init,
+  CallInitStore: initStore,
   CallLogout: logout,
   CallTokenRefresh: refreshToken
 };
