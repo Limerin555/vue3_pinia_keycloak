@@ -8,8 +8,8 @@ const filterPath = (to, from, next) => {
   if (to.fullPath !== to.path) {
     next({ path: to.path });
   }
-
-  next();
+  else
+    next();
 }
 
 const routes = [
